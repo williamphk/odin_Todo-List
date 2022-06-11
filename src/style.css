@@ -9,6 +9,7 @@
 body {
   display: flex;
   flex-direction: column;
+  font-family: "Roboto", sans-serif;
 }
 
 header {
@@ -71,7 +72,7 @@ input[type="search"]:hover::placeholder {
 
 #content {
   display: grid;
-  grid-template-columns: 0.8fr 4fr;
+  grid-template-columns: 300px 4fr;
   min-height: calc(100vh - 50px);
 }
 
@@ -87,7 +88,7 @@ nav {
   flex-direction: column;
 }
 
-a {
+.page {
   display: flex;
   align-items: center;
   line-height: 35px;
@@ -95,12 +96,12 @@ a {
   padding-left: 5px;
 }
 
-a:hover {
+.page:hover {
   background-color: rgb(209, 209, 209);
   cursor: pointer;
 }
 
-a > span {
+.page > span {
   margin-right: 10px;
 }
 
@@ -113,14 +114,13 @@ a > span {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: -10vw;
 }
 
 #today-content {
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 1000px;
+  width: 50vw;
   gap: 20px;
 }
 
@@ -189,10 +189,39 @@ a > span {
   cursor: not-allowed;
 }
 
+ul {
+  border-bottom: #cacaca 1px solid;
+  width: calc(100% - 45px);
+  display: flex;
+  position: relative;
+}
+
 li {
   list-style: none;
 }
 
 #taskListItemp2 {
   color: #777777;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+#checkbox {
+  position: absolute;
+  left: 10px;
+  width: 1.5em;
+  height: 1.5em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#checkbox:checked,
+#checkbox:hover {
+  background-color: rgb(173, 173, 173);
 }

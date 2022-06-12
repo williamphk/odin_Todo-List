@@ -241,3 +241,7 @@ li {
 #taskListItemp2Input {
   display: block;
 }
+
+.hide {
+  display: none;
+}

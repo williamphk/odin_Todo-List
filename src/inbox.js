@@ -1,5 +1,6 @@
 import { TaskArray } from "./array";
 let taskID = 0;
+const map = { 1: "title", 2: "description", 3: "date" };
 
 export function inboxjs() {
   main.innerHTML = `
@@ -90,8 +91,8 @@ export function inboxjs() {
     }
   }
 
-  const TaskFactory = (title, description, date) => {
-    return { title, description, date };
+  const TaskFactory = (title, description, date, check = false) => {
+    return { title, description, date, check };
   };
 
   function pushTask() {
@@ -104,19 +105,23 @@ export function inboxjs() {
     console.log(TaskArray);
 
     const taskList = document.createElement("ul");
+    taskList.id = taskID;
     todayContent.insertBefore(taskList, taskDiv);
 
     //checkbox
     const check = document.createElement("input");
     check.setAttribute("type", "checkbox");
     check.id = "checkbox";
-    check.addEventListener("change", function () {
+    check.addEventListener("change", function (e) {
       if (this.checked) {
-        taskListItemp1.style.textDecoration = "line-through";
-        taskListItemp2.style.textDecoration = "line-through";
+        taskListItemArray[1].style.textDecoration = "line-through";
+        taskListItemArray[2].style.textDecoration = "line-through";
+        console.log(taskID);
+        TaskArray[e.target.closest("ul").id]["check"] = true;
       } else {
-        taskListItemp1.style.textDecoration = "none";
-        taskListItemp2.style.textDecoration = "none";
+        taskListItemArray[1].style.textDecoration = "none";
+        taskListItemArray[2].style.textDecoration = "none";
+        TaskArray[e.target.closest("ul").id]["check"] = false;
       }
     });
     taskList.appendChild(check);
@@ -124,30 +129,57 @@ export function inboxjs() {
     const taskListItem = document.createElement("li");
     taskList.appendChild(taskListItem);
 
-    const taskListItemp1 = document.createElement("p");
-    const taskListItemp2 = document.createElement("p");
-    const taskListItemp3 = document.createElement("p");
-    taskListItem.appendChild(taskListItemp1);
-    taskListItem.appendChild(taskListItemp2);
-    taskListItem.appendChild(taskListItemp3);
-    taskListItemp1.innerHTML = TaskArray[taskID]["title"];
-    taskListItemp2.innerHTML = TaskArray[taskID]["description"];
-    taskListItemp3.innerHTML = TaskArray[taskID]["date"];
-    taskListItemp1.id = "taskListItemp1";
-    taskListItemp2.id = "taskListItemp2";
-    taskListItemp3.id = "taskListItemp3";
-    taskListItemp1.addEventListener("click", function () {
-      taskListItemp1.remove();
-      const taskListItemp1Input = document.createElement("input");
-      taskListItemp1Input.id = "taskListItemp1Input";
-      taskListItem.prepend(taskListItemp1Input);
+    let taskListItemArray = [];
+    taskListItemArray[1] = document.createElement("p");
+    taskListItemArray[2] = document.createElement("p");
+    taskListItemArray[3] = document.createElement("p");
+    taskListItemArray[1].innerHTML = TaskArray[taskID]["title"];
+    taskListItemArray[2].innerHTML = TaskArray[taskID]["description"];
+    taskListItemArray[3].innerHTML = TaskArray[taskID]["date"];
+
+    taskListItemArray.forEach((item, index) => {
+      taskListItem.appendChild(item);
+      item.id = `taskListItemp${index}`;
+      item.addEventListener("click", function () {
+        let allInputCreated = document.querySelectorAll("input[id^='taskListItemp']");
+        allInputCreated.forEach((x) => {
+          x.remove();
+        });
+        let hideClass = document.querySelectorAll(".hide");
+        hideClass.forEach((x) => {
+          x.classList.remove("hide");
+        });
+        item.classList.add("hide");
+        const taskListItempInput = document.createElement("input");
+        taskListItempInput.id = `taskListItemp${index}Input`;
+        taskListItem.insertBefore(taskListItempInput, item);
+        taskListItempInput.addEventListener("keypress", function (event) {
+          if (event.key === "Enter" && event.target.value.length > 0) {
+            event.preventDefault();
+            let parentID = event.target.closest("ul").id;
+            TaskArray[parentID][map[index]] = event.target.value;
+            item.innerHTML = event.target.value;
+            event.target.remove();
+            item.classList.remove("hide");
+          }
+        });
+      });
     });
-    taskListItemp2.addEventListener("click", function () {
-      taskListItemp2.remove();
-      const taskListItemp2Input = document.createElement("input");
-      taskListItemp2Input.id = "taskListItemp2Input";
-      taskListItem.insertBefore(taskListItemp2Input, taskListItemp3);
+
+    main.addEventListener("click", function (e) {
+      console.log(e.target.id);
+      if (e.target.id.includes("main")) {
+        let allInputCreated = document.querySelectorAll("input[id^='taskListItemp']");
+        allInputCreated.forEach((x) => {
+          x.remove();
+        });
+        let hideClass = document.querySelectorAll(".hide");
+        hideClass.forEach((x) => {
+          x.classList.remove("hide");
+        });
+      }
     });
+
     taskID++;
 
     //reset

@@ -1,12 +1,13 @@
-import { TaskArray } from "./array";
-const map = { 1: "title", 2: "description", 3: "date" };
+import { ProjectObject } from "./array";
 
-export function inboxjs() {
-  let taskID = TaskArray.length;
+export function newprojectjs(projectName) {
+  let TaskArray = ProjectObject[projectName];
+  let taskID = 0;
+  const map = { 1: "title", 2: "description", 3: "date" };
   main.innerHTML = `
     <div id="today-content">
         <p>
-            To-do List
+            ${projectName}
         </p>
         <button id="addTaskBtnInitial">
             + Add task
@@ -18,7 +19,6 @@ export function inboxjs() {
   addTaskBtnInitial.addEventListener("click", addTaskfunction);
 
   for (let i = 0; i < TaskArray.length; i++) {
-    if (TaskArray[i] === null) continue;
     const taskList = document.createElement("ul");
     taskList.id = i;
     todayContent.insertBefore(taskList, addTaskBtnInitial);
@@ -41,7 +41,8 @@ export function inboxjs() {
         taskListItemArray[2].style.textDecoration = "none";
         TaskArray[e.target.closest("ul").id]["check"] = false;
       }
-      localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
+      localStorage.setItem("ProjectObject", JSON.stringify(ProjectObject));
+      console.log(typeof JSON.stringify(ProjectObject));
     });
 
     const taskListItem = document.createElement("li");
@@ -84,21 +85,10 @@ export function inboxjs() {
             item.innerHTML = event.target.value;
             event.target.remove();
             item.classList.remove("hide");
-            localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
+            localStorage.setItem("ProjectObject", JSON.stringify(ProjectObject));
           }
         });
       });
-    });
-
-    //removeBtn
-    const removeBtn = document.createElement("button");
-    removeBtn.id = "removeTaskBtn";
-    taskList.appendChild(removeBtn);
-    removeBtn.innerHTML = "X";
-    removeBtn.addEventListener("click", function () {
-      taskList.remove();
-      TaskArray[i] = null;
-      localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
     });
   }
 
@@ -171,7 +161,7 @@ export function inboxjs() {
         taskListItemArray[2].style.textDecoration = "none";
         TaskArray[e.target.closest("ul").id]["check"] = false;
       }
-      localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
+      localStorage.setItem("ProjectObject", JSON.stringify(ProjectObject));
     });
     taskList.appendChild(check);
 
@@ -185,7 +175,6 @@ export function inboxjs() {
     taskListItemArray[1].innerHTML = TaskArray[taskID]["title"];
     taskListItemArray[2].innerHTML = TaskArray[taskID]["description"];
     taskListItemArray[3].innerHTML = TaskArray[taskID]["date"];
-    console.log(taskListItemArray);
 
     taskListItemArray.forEach((item, index) => {
       taskListItem.appendChild(item);
@@ -211,21 +200,10 @@ export function inboxjs() {
             item.innerHTML = event.target.value;
             event.target.remove();
             item.classList.remove("hide");
-            localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
+            localStorage.setItem("ProjectObject", JSON.stringify(ProjectObject));
           }
         });
       });
-    });
-
-    //removeBtn
-    const removeBtn = document.createElement("button");
-    removeBtn.id = "removeTaskBtn";
-    taskList.appendChild(removeBtn);
-    removeBtn.innerHTML = "X";
-    removeBtn.addEventListener("click", function () {
-      taskList.remove();
-      TaskArray[removeBtn.closest("ul").id] = null;
-      localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
     });
 
     main.addEventListener("click", function (e) {
@@ -249,6 +227,6 @@ export function inboxjs() {
     document.getElementById("addTaskDate").value = "";
     addTaskBtn.disabled = true;
 
-    localStorage.setItem("TaskArray", JSON.stringify(TaskArray));
+    localStorage.setItem("ProjectObject", JSON.stringify(ProjectObject));
   }
 }

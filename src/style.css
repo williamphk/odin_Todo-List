@@ -245,3 +245,68 @@ li {
 .hide {
   display: none;
 }
+
+#addProjectBtn {
+  width: 100%;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  height: 25px;
+  color: #888888;
+  border-radius: 5px;
+}
+
+#addProjectBtn:hover {
+  background-color: rgb(209, 209, 209);
+  cursor: pointer;
+}
+
+#addProjectInput {
+  border: 1px solid rgb(209, 209, 209);
+  height: 20px;
+  background-color: rgb(243, 243, 243);
+}
+
+#addProjectInput::placeholder {
+  color: rgb(176, 176, 176);
+}
+
+#addProjectInput:focus {
+  border: 1px solid rgb(152, 152, 152);
+  outline: none;
+  background-color: rgb(255, 255, 255);
+}
+
+#addProjectInput:focus::placeholder {
+  color: rgb(145, 145, 145);
+}
+
+.newProjectNav {
+  height: 25px;
+  padding-left: 40px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.newProjectNav:hover {
+  background-color: rgb(209, 209, 209);
+  cursor: pointer;
+}
+
+#removeBtn {
+  background-color: rgb(163, 34, 34);
+  cursor: pointer;
+}
+
+#nav-div {
+  width: 180px;
+  display: block;
+}
+
+#removeTaskBtn {
+  margin-left: auto;
+  height: 25px;
+  width: 25px;
+}

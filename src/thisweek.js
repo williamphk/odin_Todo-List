@@ -13,15 +13,21 @@ export function thisweekjs() {
   const todayContent = document.getElementById("today-content");
 
   for (let i = 0; i < TaskArray.length; i++) {
+    if (TaskArray[i] === null) continue;
     let date = parseISO(TaskArray[i]["date"]);
     if (isThisWeek(date)) {
       const taskList = document.createElement("ul");
+      taskList.id = i;
       todayContent.appendChild(taskList);
 
       //checkbox
       const check = document.createElement("input");
       check.setAttribute("type", "checkbox");
       check.id = "checkbox";
+      taskList.appendChild(check);
+      if (TaskArray[check.closest("ul").id]["check"] === true) {
+        check.setAttribute("checked", "checked");
+      }
       check.addEventListener("change", function () {
         if (this.checked) {
           taskListItemp1.style.textDecoration = "line-through";
@@ -31,23 +37,25 @@ export function thisweekjs() {
           taskListItemp2.style.textDecoration = "none";
         }
       });
-      taskList.appendChild(check);
 
       const taskListItem = document.createElement("li");
       taskList.appendChild(taskListItem);
 
-      const taskListItemp1 = document.createElement("p");
-      const taskListItemp2 = document.createElement("p");
-      const taskListItemp3 = document.createElement("p");
-      taskListItem.appendChild(taskListItemp1);
-      taskListItem.appendChild(taskListItemp2);
-      taskListItem.appendChild(taskListItemp3);
-      taskListItemp1.innerHTML = TaskArray[i]["title"];
-      taskListItemp2.innerHTML = TaskArray[i]["description"];
-      taskListItemp3.innerHTML = TaskArray[i]["date"];
-      taskListItemp1.id = "taskListItemp1";
-      taskListItemp2.id = "taskListItemp2";
-      taskListItemp3.id = "taskListItemp3";
+      let taskListItemArray = [];
+      taskListItemArray[1] = document.createElement("p");
+      taskListItemArray[2] = document.createElement("p");
+      taskListItemArray[3] = document.createElement("p");
+      taskListItemArray[1].innerHTML = TaskArray[i]["title"];
+      taskListItemArray[2].innerHTML = TaskArray[i]["description"];
+      taskListItemArray[3].innerHTML = TaskArray[i]["date"];
+      taskListItemArray.forEach((item, index) => {
+        taskListItem.appendChild(item);
+        if (TaskArray[item.closest("ul").id]["check"] === true) {
+          taskListItemArray[1].style.textDecoration = "line-through";
+          taskListItemArray[2].style.textDecoration = "line-through";
+        }
+        item.id = `taskListItemp${index}`;
+      });
     }
   }
 }

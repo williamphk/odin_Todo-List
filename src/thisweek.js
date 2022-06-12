@@ -5,7 +5,7 @@ export function thisweekjs() {
   main.innerHTML = `
     <div id="today-content">
         <p>
-            Today
+            This Week
         </p>
     </div>
     `;

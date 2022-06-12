@@ -194,16 +194,27 @@ ul {
   width: calc(100% - 45px);
   display: flex;
   position: relative;
+  padding-top: 10px;
+  border-radius: 5px;
+}
+
+ul:hover {
+  background-color: rgb(237, 237, 237);
 }
 
 li {
   list-style: none;
 }
 
+#taskListItemp1 {
+  cursor: pointer;
+}
+
 #taskListItemp2 {
   color: #777777;
   font-size: 13px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 #checkbox {
@@ -224,4 +235,9 @@ li {
 #checkbox:checked,
 #checkbox:hover {
   background-color: rgb(173, 173, 173);
+}
+
+#taskListItemp1Input,
+#taskListItemp2Input {
+  display: block;
 }

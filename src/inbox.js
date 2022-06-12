@@ -136,6 +136,18 @@ export function inboxjs() {
     taskListItemp1.id = "taskListItemp1";
     taskListItemp2.id = "taskListItemp2";
     taskListItemp3.id = "taskListItemp3";
+    taskListItemp1.addEventListener("click", function () {
+      taskListItemp1.remove();
+      const taskListItemp1Input = document.createElement("input");
+      taskListItemp1Input.id = "taskListItemp1Input";
+      taskListItem.prepend(taskListItemp1Input);
+    });
+    taskListItemp2.addEventListener("click", function () {
+      taskListItemp2.remove();
+      const taskListItemp2Input = document.createElement("input");
+      taskListItemp2Input.id = "taskListItemp2Input";
+      taskListItem.insertBefore(taskListItemp2Input, taskListItemp3);
+    });
     taskID++;
 
     //reset
